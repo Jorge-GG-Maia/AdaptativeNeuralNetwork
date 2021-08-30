@@ -1,30 +1,49 @@
-import pandas as pd
 import numpy as np
 
 
 
-entrada = [1,2,3]
-
-
 class RedeNeural():
 
-    def __init__(self, gen, sample, pesos = 0, camadas = 3):
+    def __init__(self, gen, number, pesos = 0):
         self.gen = gen
+        self.name = str(gen) + str(number)
+        self.pesos = pesos
         
-        if pesos == 0:
-            
-            tp = []
-            for i in range(camadas):
-            
-            
-                cp = []
-            
-                for i in range(len(sample)):
-                
-                    cp.append(np.random.randn(len(sample)))
-                
-                    #print(cp[-1])
-                
-                tp.append(cp)
+        
+    def genesis(self, amostra, camadas = 3):
+    
 
-a = RedeNeural(0, entrada)
+        
+        #Lista principal, contendo o conjunto de listas de cada camada (x0)
+        layer = []
+        
+        for i in range(camadas):
+            #Lista intermediária, contendo as listas de pesos específicos para cada variável (x1)
+            
+            c = []
+            for i in range(len(amostra)):
+                
+                #Criação de uma lista específica de pesos para cada variável presente na amostra (x2)
+                pesos = np.random.randn(len(amostra))
+                
+                c.append(pesos)
+                
+            layer.append(c)
+            
+        self.layers = layer
+
+
+    def pensar(self, entrada):
+        
+        camadaatual = []    
+        for i in range(len(self.layers)):
+            camadatemporaria = []
+            
+            for j in range(len(entrada)):
+            
+                camadatemporaria.append(sum([entrada[j] * x for x in self.layers[i][j]]))
+                
+            camadaatual = camadatemporaria
+            
+        self.saida = sum(camadaatual)        
+        return sum(camadaatual)
