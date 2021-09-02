@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import random
 
 
 class RedeNeural():
@@ -51,6 +52,25 @@ class RedeNeural():
         
         self.saida = sum(camadaatual)
         
+        
+    def evolutive_mutation(self, fator = 0.2):
+        
+        ngen = []
+    
+        for i in range(len(self.pesos)):
+            
+            nlayer = []
+            for j in range(len(self.pesos[i])):
+                npesos = []
+                
+                for y in range(len(self.pesos[i][j])):
+                    npesos.append(self.pesos[i][j][y] * random.uniform(fator, -1 * fator))
+                
+                
+                nlayer.append(npesos)
+            ngen.append(nlayer)
+        
+        return ngen
         
         
     def b_retorno(self, y):
