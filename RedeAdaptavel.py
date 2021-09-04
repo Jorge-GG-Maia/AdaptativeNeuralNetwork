@@ -9,7 +9,10 @@ class RedeNeural():
         self.gen = gen
         self.name = str(gen) + '-' + str(number)
         self.pesos = pesos
-        self.score = 0
+        self.acertos = 0
+        self.erros = 0
+
+        
         
     def genesis(self, amostra, camadas = 3):
     
@@ -53,7 +56,7 @@ class RedeNeural():
         self.saida = sum(camadaatual)
         
         
-    def evolutive_mutation(self, fator = 0.2):
+    def evolutive_mutation(self, fator = 0.1):
         
         ngen = []
     
@@ -74,31 +77,35 @@ class RedeNeural():
         
         
     def b_retorno(self, y):
-    
-        if y == 0:
         
-            self.score += 1
+        
+        if y == self.saida:
+        
+            self.acertos += 1
             
         else:
         
-            self.score -= 1
+            self.erros += 1
+
+         
+        self.score = self.acertos/(self.acertos + self.erros)
 
     def sigmoid(self, step_value = False):
-    
+     
         sigm = 1 / ( 1 + np.exp(-self.saida))
         
+        out = sigm
         
         if step_value == True:
         
             if sigm >= 0.5:
-                return 1
+                out = 1
                 
             else:
-                return 0
-                
-        else:
-            return sigm
-                        
+                out = 0
+        
+        self.saida = out
+        return out                
     
     def tanh(self):
         
