@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import math
 import random
 
@@ -112,4 +113,26 @@ class RedeNeural():
         tanh = math.tanh(self.saida)
         
         return tanh
+    
+    
+    
+    def export_excel(self, name):
+      
+        pesos = self.pesos
+        
+        writer = pd.ExcelWriter(str(name) + '.xlsx')
+        
+        for c in range(len(pesos)):
+            
+            print(pesos[c])
+            cmd = pd.DataFrame()
+            
+            for i in range(len(pesos[c])):
+                
+                cmd[str(i)] = pesos[c][i]
+                
+            print(cmd)
+            cmd.to_excel(writer, 'camada ' + str(c), index =  False)
+            
+        writer.save()
     
