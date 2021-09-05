@@ -123,15 +123,13 @@ class RedeNeural():
         writer = pd.ExcelWriter(str(name) + '.xlsx')
         
         for c in range(len(pesos)):
-            
-            print(pesos[c])
+           
             cmd = pd.DataFrame()
             
             for i in range(len(pesos[c])):
                 
                 cmd[str(i)] = pesos[c][i]
                 
-            print(cmd)
             cmd.to_excel(writer, 'camada ' + str(c), index =  False)
             
         writer.save()
